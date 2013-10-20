@@ -7,6 +7,13 @@ import java.util.Date;
 import java.util.List;
 
 import hsr.appquest.size.R;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Paint.Style;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.net.Uri;
@@ -16,30 +23,60 @@ import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.Images.Media;
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.Toast;
+
 
 public class SizeActivity extends Activity implements  
 											SurfaceHolder.Callback ,
 											Camera.PictureCallback{
-	
+		
     private final String TAG = "carpelibrum";
     private Camera camera;
     private Camera.PictureCallback cameraCallbackVorschau;
     private Camera.ShutterCallback cameraCallbackVerschluss;
     private SurfaceHolder cameraViewHolder;
-
+    private LineView lineview;
+	private int width;
+	private int height;
+    
     
     //Layout aufrufen
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_size);
-	}
+		
+         //Zur LinieView verweisen
+        lineview = new LineView(this); 
 
+
+        FrameLayout fl = (FrameLayout) findViewById(R.id.FrameLayout1);
+        fl.addView(lineview);
+        	
+
+        }
+	
+	public void onClick(View v) {
+	       Button button = (Button) this.findViewById(R.id.button1);
+	        //button.onClick(this);
+	        
+	 	   Toast einToast = Toast.makeText(this, "Gedrückt: " + ((Button) v).getText(), Toast.LENGTH_SHORT);
+		   einToast.show();
+	   }
+        
+  
 	
 	//Menü aufrufen
 	@Override
@@ -66,8 +103,7 @@ public class SizeActivity extends Activity implements
         
         Camera.Parameters params = camera.getParameters();
         Camera.Size vorschauGroesse = params.getPreviewSize();
-        params.setPreviewSize(vorschauGroesse.width, vorschauGroesse.height);
-   
+        //params.setPreviewSize(vorschauGroesse.width, vorschauGroesse.height);
         
         camera.setParameters(params);
         
@@ -84,41 +120,11 @@ public class SizeActivity extends Activity implements
 
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
-	}
-
-	//Bild aufnehmen
-	public boolean onTouchEvent(MotionEvent event) {
-
-       if(event.getAction() == MotionEvent.ACTION_UP) {
-		   camera.takePicture(this.cameraCallbackVerschluss, this.cameraCallbackVorschau, this); 
-		   return true; 
-		}
-       else {
-		   return super.onTouchEvent(event);
-       }
-
+	
 	}
 
 
-	// Bild speichern
 	public void onPictureTaken(byte[] data, Camera camera) {
-		
-        try {
-           SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
-           String name     = "foto_" + df.format(new Date());
-           ContentValues werte = new ContentValues();
-           werte.put(MediaColumns.TITLE, name);
-           werte.put(ImageColumns.DESCRIPTION, "Aufgenommen mit CameraDemo");
-           Uri uri = getContentResolver().insert(Media.EXTERNAL_CONTENT_URI, werte);
-           
-           OutputStream ausgabe =  getContentResolver().openOutputStream(uri);            	   
-           ausgabe.write(data);
-           ausgabe.close();
-           camera.startPreview();
-          
-     } catch (Exception ex) {
-    	 Log.d(TAG, ex.getMessage());
-     }
 
 	}
 
@@ -156,8 +162,67 @@ public class SizeActivity extends Activity implements
             public void onShutter() {
             }
         };
+        
+	}
 
+	
+	//Linie
+	public class LineView extends View {
+		
+	    private float xpos = -1;
+		private float ypos = -1;
+		
+		private Paint linePaint;
+		private float startX;
+		private float startY;
+		private float stopX;
+		private float stopY;
+		
+	
+	public LineView(Context c) {
+			super(c);
+	
+			linePaint = new Paint();
+			linePaint.setColor(Color.GREEN);
+			linePaint.setStrokeWidth(10);
+
+			
+			
+		setFocusable(true);
+	}
+	
+	
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+
+		canvas.drawLine(startX, startY, stopX, stopY, linePaint);
 		
 	}
 
+	@Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+			switch (event.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+				startX = event.getX();
+				startY = event.getY();
+				return true;
+			
+			case MotionEvent.ACTION_MOVE:
+				stopX = event.getX();
+				stopY = event.getY();
+				break;
+			case MotionEvent.ACTION_UP:    
+				stopX = event.getX();
+				stopY = event.getY();
+				break;
+			default:
+				return false;
+			}
+			invalidate();
+			return true;
+	}
+	
 }
+}
+	
