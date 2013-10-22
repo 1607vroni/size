@@ -1,5 +1,5 @@
 /** Automatically generated file. DO NOT MODIFY */
-package hsr.appquest.size;
+package ch.hsr.girlpower.size;
 
 public final class BuildConfig {
     public final static boolean DEBUG = true;
