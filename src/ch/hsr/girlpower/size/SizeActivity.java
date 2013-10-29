@@ -8,13 +8,11 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
@@ -27,7 +25,6 @@ public class SizeActivity extends Activity implements  SurfaceHolder.Callback , 
     private SurfaceHolder cameraViewHolder;
 	private int width;
 	private int height;
-	private LineView lineview;
     
     /**
      * Layout aufrufen
@@ -35,14 +32,7 @@ public class SizeActivity extends Activity implements  SurfaceHolder.Callback , 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_size);
-        lineview = new LineView(this); 
-        LinearLayout ll = (LinearLayout) findViewById(R.id.LinearLayout1);
-        ll.addView(lineview);
-        
-	       Button DAButton = (Button) this.findViewById(R.id.button1);
-	       DAButton.setOnClickListener(this);
-        
+		setContentView(R.layout.activity_size);       
 	}
 	
 	public void onClick(View v) {
@@ -80,6 +70,7 @@ public class SizeActivity extends Activity implements  SurfaceHolder.Callback , 
         }
      
         camera.startPreview();	
+		Toast.makeText(this ,"Unterkante bestimmen",Toast.LENGTH_SHORT).show();
 	}
 
 
@@ -108,7 +99,7 @@ public class SizeActivity extends Activity implements  SurfaceHolder.Callback , 
 	@Override
 	protected void onResume() {
 		super.onResume();
-        SurfaceView cameraView   = (SurfaceView) findViewById(R.id.surfaceview1);
+        SurfaceView cameraView   = (SurfaceView) findViewById(R.id.camera_view);
         cameraViewHolder         = cameraView.getHolder();
         cameraViewHolder.addCallback(this);      
         cameraCallbackVorschau = new Camera.PictureCallback() {
@@ -120,6 +111,19 @@ public class SizeActivity extends Activity implements  SurfaceHolder.Callback , 
             public void onShutter() {
             }
         }; 
+	}
+
+	public boolean onTouchEvent(MotionEvent event) {
+		if(event.getAction() == MotionEvent.ACTION_UP){
+
+			Toast.makeText(this ,"Oberkante bestimmen",Toast.LENGTH_SHORT).show();
+			   return true; 
+		}
+		else {
+				Intent intent = new Intent(this, DistanceActivity.class);
+				startActivity(intent);
+				return super.onTouchEvent(event);
+	       }
 	}
 }
 	

@@ -1,21 +1,24 @@
 package ch.hsr.girlpower.size;
 
-import ch.hsr.girlpower.size.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 public class DistanceActivity extends Activity implements OnClickListener, SensorEventListener {
 
-	private Button zurückButton;
+	public TextView TestView;
+	
+	private Button KameraButton;
     private SensorManager SensorManager;
     private Sensor Accelerometer;
 	
@@ -26,12 +29,17 @@ public class DistanceActivity extends Activity implements OnClickListener, Senso
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_distance);
         
-        zurückButton = (Button) this.findViewById(R.id.button1);
-        zurückButton.setOnClickListener(this);
-     
+        KameraButton = (Button) this.findViewById(R.id.btn_Kamera);
+        KameraButton.setOnClickListener(this);
+        
     	 SensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
     	 Accelerometer = SensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD); 
-    }
+     
+         if(Accelerometer == null) {
+         	Log.d("carpelibrum", "Kein Lagesensor vorhanden");
+         }
+         
+     }
 
     protected void onResume() {
         super.onResume();
@@ -45,7 +53,7 @@ public class DistanceActivity extends Activity implements OnClickListener, Senso
     
 	public void onClick(View v) {
 		
-		if(v == zurückButton) {
+		if(v == KameraButton) {
 			Intent intent = new Intent(this, SizeActivity.class);
 			startActivity(intent);
 		}
@@ -84,7 +92,3 @@ public class DistanceActivity extends Activity implements OnClickListener, Senso
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {	
 	}
 }
-
-
-
-

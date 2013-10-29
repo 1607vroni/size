@@ -14,47 +14,43 @@ public final class R {
         public static final int skizze=0x7f020000;
     }
     public static final class id {
-        public static final int EditText01=0x7f070006;
-        public static final int EditText02=0x7f070004;
-        public static final int EditText03=0x7f070009;
-        public static final int LinearLayout1=0x7f07000a;
-        public static final int LinearLayout2=0x7f070000;
-        public static final int action_settings=0x7f07000c;
-        public static final int button1=0x7f070002;
-        public static final int editText1=0x7f070008;
-        public static final int imageView1=0x7f070001;
-        public static final int surfaceview1=0x7f07000b;
-        public static final int textView1=0x7f070003;
-        public static final int textView2=0x7f070005;
-        public static final int textView3=0x7f070007;
+        public static final int action_settings=0x7f04000c;
+        public static final int btn_Berechnen=0x7f04000b;
+        public static final int btn_Kamera=0x7f04000a;
+        public static final int camera_view=0x7f040000;
+        public static final int et_abstand=0x7f040007;
+        public static final int et_alpha=0x7f040009;
+        public static final int et_beta=0x7f040008;
+        public static final int et_hoehe=0x7f040006;
+        public static final int iv_skizze=0x7f040001;
+        public static final int tv_Abstand=0x7f040003;
+        public static final int tv_Hoehe=0x7f040002;
+        public static final int tv_alpha=0x7f040005;
+        public static final int tv_beta=0x7f040004;
     }
     public static final class layout {
         public static final int activity_distance=0x7f030000;
         public static final int activity_size=0x7f030001;
     }
     public static final class menu {
-        public static final int size=0x7f060000;
+        public static final int size=0x7f070000;
     }
     public static final class string {
-        public static final int action_settings=0x7f040001;
-        public static final int app_name=0x7f040000;
-        public static final int hello_world=0x7f040002;
+        public static final int Abstand=0x7f050005;
+        public static final int Alpha=0x7f050007;
+        public static final int Beta=0x7f050006;
+        public static final int Hoehe=0x7f050004;
+        public static final int action_settings=0x7f050001;
+        public static final int app_name=0x7f050000;
+        public static final int berechnen=0x7f050009;
+        public static final int iv_skizze=0x7f050003;
+        public static final int kamera=0x7f050008;
+        public static final int menu_settings=0x7f050002;
     }
     public static final class style {
-        /** 
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    
-
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        
-         */
-        public static final int AppBaseTheme=0x7f050000;
-        /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
-         */
-        public static final int AppTheme=0x7f050001;
+        public static final int AppBaseTheme=0x7f060000;
+        public static final int AppTheme=0x7f060001;
+        public static final int minET=0x7f060003;
+        public static final int minTV=0x7f060002;
     }
 }

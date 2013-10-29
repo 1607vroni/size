@@ -1,80 +1,75 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:id="@+id/LinearLayout2">
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="match_parent"
+        android:id="@id/iv_skizze"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/iv_skizze"
         android:src="@drawable/skizze" />
-    
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="zurück" />
 
-   <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="α"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-   <EditText
-       android:id="@+id/EditText02"
-       android:layout_width="100dp"
-       android:layout_height="wrap_content"
-       android:ems="10"
-       android:inputType="numberDecimal" >
-   </EditText>
-   
-    
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="β"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+    <TextView android:id="@id/tv_Hoehe" android:paddingRight="200.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="60.0dip" android:text="@string/Hoehe" android:layout_below="@id/iv_skizze" android:layout_centerInParent="true" />
+    <TextView android:id="@id/tv_Abstand" android:layout_marginTop="12.0dip" android:text="@string/Abstand" android:layout_below="@id/tv_Hoehe" style="@style/minTV" />
+    <TextView android:id="@id/tv_beta" android:layout_marginTop="12.0dip" android:text="@string/Beta" android:layout_below="@id/tv_Abstand" style="@style/minTV" />
+    <TextView android:id="@id/tv_alpha" android:layout_marginTop="12.0dip" android:text="@string/Alpha" android:layout_below="@id/tv_beta" style="@style/minTV" />
 
     <EditText
-        android:id="@+id/EditText01"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:id="@id/et_hoehe"
+        style="@style/minET"
+        android:layout_alignBaseline="@id/tv_Hoehe"
+        android:layout_alignBottom="@id/tv_Hoehe"
+        android:layout_alignParentRight="true"
         android:ems="10"
-        android:inputType="numberDecimal" />
-        
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="a (cm)"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-    
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
+        android:enabled="false"
         android:inputType="numberDecimal" >
+
+        <requestFocus />
     </EditText>
-    
-            
-     <TextView
-        android:id="@+id/textView1"
+
+    <EditText
+        android:id="@id/et_abstand"
+        style="@style/minET"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_Hoehe"
+        android:ems="10"
+        android:enabled="true"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@id/et_beta"
+        style="@style/minET"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_Abstand"
+        android:ems="10"
+        android:enabled="false"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@id/et_alpha"
+        style="@style/minET"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_beta"
+        android:ems="10"
+        android:enabled="false"
+        android:inputType="numberDecimal" />
+
+    <Button
+        android:id="@id/btn_Kamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="b (cm)"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:layout_above="@id/tv_Hoehe"
+        android:layout_alignRight="@id/tv_Abstand"
+        android:text="@string/kamera" />
 
-     <EditText
-         android:id="@+id/EditText03"
-         android:layout_width="100dp"
-         android:layout_height="wrap_content"
-         android:ems="10"
-         android:inputType="numberDecimal" />
+    <Button
+        android:id="@id/btn_Berechnen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv_skizze"
+        android:layout_alignRight="@id/tv_Hoehe"
+        android:layout_marginRight="32dp"
+        android:text="@string/berechnen" />
 
-</LinearLayout>
+</RelativeLayout>
