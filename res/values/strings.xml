@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Grössen Messer</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_log">Log-Buch</string>
     <string name="menu_settings">Settings</string>
     <string name="iv_skizze">Bild</string>
     <string name="Hoehe">b (cm)</string>
@@ -9,5 +9,5 @@
     <string name="Beta">β</string>
     <string name="Alpha">α</string>
     <string name="kamera">Kamera</string>
-    <string name="berechnen">Berechnen</string>
+    <string name="log">Log-Buch</string>
 </resources>

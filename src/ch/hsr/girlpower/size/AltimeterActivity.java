@@ -2,15 +2,18 @@ package ch.hsr.girlpower.size;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AltimeterActivity extends Activity implements OnClickListener{
 	private float winkela;
@@ -23,6 +26,8 @@ public class AltimeterActivity extends Activity implements OnClickListener{
 	private Double abstand;
 	private EditText a;
 	private Button KameraButton;
+	
+	private static final int SCAN_QR_CODE_REQUEST_CODE = 0;
 
 	
 	public void onClick(View v) {
@@ -33,11 +38,22 @@ public class AltimeterActivity extends Activity implements OnClickListener{
 		}
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+		
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.size, menu);
 		return true;
-	}
+    }
+    
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+            if (requestCode == SCAN_QR_CODE_REQUEST_CODE) {
+                    if (resultCode == RESULT_OK) {
+                            String qrCode = intent.getStringExtra("SCAN_RESULT");
+                            sendlog(qrCode);
+                    }
+            }
+    }
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,5 +94,28 @@ public class AltimeterActivity extends Activity implements OnClickListener{
 		});
 	
 	}
-	
+    //Log-Buch eintrag
+	public boolean onClickLogMenu(MenuItem item){
+		Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+		startActivityForResult(intent, SCAN_QR_CODE_REQUEST_CODE);
+		return false;		
+	}
+	private void sendlog(String qrCode) {
+		Intent intent = new Intent("ch.appquest.intent.LOG");
+		 
+		if (getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).isEmpty()) {
+			Toast.makeText(this, "Log-Buch nicht installiert", Toast.LENGTH_LONG).show();
+			return;
+		}
+		 
+		intent.putExtra("ch.appquest.taskname", "Groessen Messer");
+		
+        TextView codeText = (TextView) findViewById(R.id.et_hoehe);
+        String code = codeText.getText().toString();
+        
+		intent.putExtra("ch.appquest.logmessage", qrCode + ": " + code);
+		 
+		startActivity(intent);
+	}
 }

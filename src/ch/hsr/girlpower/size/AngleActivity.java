@@ -45,11 +45,6 @@ public class AngleActivity extends Activity implements  SurfaceHolder.Callback ,
         } 
 	}  
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.size, menu);
-		return true;
-	}
 	
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
